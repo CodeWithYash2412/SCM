@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 import { IoPersonCircle } from "react-icons/io5";
@@ -8,6 +8,8 @@ import { SignOut } from '../../Auth/Auth';
 import { IoPersonAddSharp } from "react-icons/io5";
 import { HiRectangleGroup } from "react-icons/hi2";
 import { FaTasks } from "react-icons/fa";
+import { MdFavorite } from "react-icons/md";
+
 
 
 
@@ -28,7 +30,7 @@ const SideBar = () => {
         return window.location.pathname === pathname;
     }
 
-    const onLogout = async (e) => {
+    const onLogout = async () => {
         await SignOut();
         navigate('/');
     };
@@ -84,6 +86,13 @@ const SideBar = () => {
                             <Link to="groupList" className={isActive('/contact_manager/groupList') ? 'flex items-center p-3 text-white  bg-blue-600 rounded-lg dark:text-white  group' : 'flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'} onClick={closeSidebar}>
                                 <HiRectangleGroup className={`inline-block w-5 h-5 ${isActive('/contact_manager/groupList') ? 'text-white group-hover:text-white' : 'text-gray-500 group-hover:text-gray-900'}  transition duration-75 dark:text-gray-400  dark:group-hover:text-white`} />
                                 <span className="ms-3">Group List</span>
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link to="favoriteList" className={isActive('/contact_manager/favoriteList') ? 'flex items-center p-3 text-white  bg-blue-600 rounded-lg dark:text-white  group' : 'flex items-center p-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'} onClick={closeSidebar}>
+                                <MdFavorite className={`inline-block w-5 h-5 ${isActive('/contact_manager/favoriteList') ? 'text-white group-hover:text-white' : 'text-gray-500 group-hover:text-gray-900'}  transition duration-75 dark:text-gray-400  dark:group-hover:text-white`} />
+                                <span className="ms-3">Favorite List</span>
                             </Link>
                         </li>
 

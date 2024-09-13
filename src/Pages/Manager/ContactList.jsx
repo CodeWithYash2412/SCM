@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaEdit, FaTrash, FaUsers } from "react-icons/fa";
+import { FaEdit, FaTrash, FaUsers, FaHeart, FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const ContactList = () => {
@@ -8,7 +8,6 @@ const ContactList = () => {
     const dummyData = [
         { id: 1, name: "Alice Smith", mobile: "+91 99999 99901", email: "alice.smith@example.com", jobTitle: "Software Engineer", streetAddress: "123 Main St", city: "New York", state: "NY", postalCode: "10001", country: "USA", dateOfBirth: "1990-01-01", assignedTask: "Project A" },
         { id: 2, name: "Bob Johnson", mobile: "+91 99999 99902", email: "bob.johnson@example.com", jobTitle: "Product Manager", streetAddress: "456 Elm St", city: "San Francisco", state: "CA", postalCode: "94101", country: "USA", dateOfBirth: "1985-02-02", assignedTask: "Project B" },
-
     ];
 
     const [contacts, setContacts] = useState(dummyData);
@@ -18,6 +17,7 @@ const ContactList = () => {
     const [showGroupPopup, setShowGroupPopup] = useState(false);
     const [selectedContact, setSelectedContact] = useState(null);
     const [showContactPopup, setShowContactPopup] = useState(false);
+    const [favorites, setFavorites] = useState([]);
 
     const indexOfLastContact = currentPage * contactsPerPage;
     const indexOfFirstContact = indexOfLastContact - contactsPerPage;
@@ -54,8 +54,16 @@ const ContactList = () => {
     };
 
     const handleEditContact = (id) => {
-        navigate(`/contact_manager/EditContact/${id}`)
-    }
+        navigate(`/contact_manager/EditContact/${id}`);
+    };
+
+    const handleToggleFavorite = (contact) => {
+        if (favorites.includes(contact.id)) {
+            setFavorites(favorites.filter((favId) => favId !== contact.id));
+        } else {
+            setFavorites([...favorites, contact.id]);
+        }
+    };
 
     return (
         <div className="w-full flex flex-col items-center mt-6">
@@ -65,14 +73,49 @@ const ContactList = () => {
                     Create New Contact
                 </span>
             </button>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-3 gap-6 w-full">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 place-content-center lg:grid-cols-3 pb-3 gap-6 w-full">
+                {currentContacts.length > 0 ? (
+                    currentContacts.map((contact) => (
+                        <div key={contact.id} className="bg-white p-6 rounded-lg shadow-lg cursor-pointer" onClick={() => handleContactClick(contact)}>
+                            <h3 className="text-xl font-bold mb-2">{contact.name}</h3>
+                            <p className="text-gray-700 mb-2">{contact.mobile}</p>
+                            <p className="text-gray-700 mb-4">{contact.email}</p>
+                            <div className="flex justify-around">
+                                <button className="text-blue-500 hover:text-blue-700" onClick={(e) => { e.stopPropagation(); handleEditContact(contact.id); }}>
+                                    <FaEdit />
+                                </button>
+                                <button className="text-red-500 hover:text-red-700" onClick={(e) => { e.stopPropagation(); handleDelete(contact.id); }}>
+                                    <FaTrash />
+                                </button>
+                                <button className="text-green-500 hover:text-green-700" onClick={(e) => { e.stopPropagation(); handleAddToGroup(contact); }}>
+                                    <FaUsers />
+                                </button>
+                                <button className="text-pink-500 hover:text-pink-700" onClick={(e) => { e.stopPropagation(); handleToggleFavorite(contact); }}>
+                                    {favorites.includes(contact.id) ? <FaHeart className="animate-pulse" /> : <FaRegHeart />}
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="w-full flex justify-center items-center">
+                        <div className="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
+                            <h3 className="text-2xl font-bold mb-4 text-gray-800">No Contacts</h3>
+                            <p className="text-gray-700 mb-4">You have no contacts. Please add a new contact.</p>
+                            <button onClick={handleCreateContact} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                                Add Contact
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div> */}
+            {currentContacts.length > 0 ? <div className="grid grid-cols-1 md:grid-cols-2 place-content-center lg:grid-cols-3 pb-3 gap-6 w-full">
                 {currentContacts.map((contact) => (
                     <div key={contact.id} className="bg-white p-6 rounded-lg shadow-lg cursor-pointer" onClick={() => handleContactClick(contact)}>
                         <h3 className="text-xl font-bold mb-2">{contact.name}</h3>
                         <p className="text-gray-700 mb-2">{contact.mobile}</p>
                         <p className="text-gray-700 mb-4">{contact.email}</p>
                         <div className="flex justify-around">
-                            <button className="text-blue-500 hover:text-blue-700" onClick={() => handleEditContact(contact.id)} >
+                            <button className="text-blue-500 hover:text-blue-700" onClick={(e) => { e.stopPropagation(); handleEditContact(contact.id); }}>
                                 <FaEdit />
                             </button>
                             <button className="text-red-500 hover:text-red-700" onClick={(e) => { e.stopPropagation(); handleDelete(contact.id); }}>
@@ -81,10 +124,23 @@ const ContactList = () => {
                             <button className="text-green-500 hover:text-green-700" onClick={(e) => { e.stopPropagation(); handleAddToGroup(contact); }}>
                                 <FaUsers />
                             </button>
+                            <button className="text-pink-500 hover:text-pink-700" onClick={(e) => { e.stopPropagation(); handleToggleFavorite(contact); }}>
+                                {favorites.includes(contact.id) ? <FaHeart className="animate-pulse" /> : <FaRegHeart />}
+                            </button>
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> : (
+                <div className="w-4/5 flex justify-center items-center bg-gray-200 mt-10 shadow-gray-300 p-6 rounded-lg shadow-xl cursor-pointer">
+                    <div className="bg-white w-full p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
+                        <h3 className="text-2xl font-bold mb-4 text-gray-800">No Contacts</h3>
+                        <p className="text-gray-700 mb-4">You have no contacts. Please add a new contact.</p>
+                        <button onClick={handleCreateContact} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                            Add Contact
+                        </button>
+                    </div>
+                </div>
+            )}
             {/* Pagination */}
             <div className="flex justify-center mt-7">
                 <nav>

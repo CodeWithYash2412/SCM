@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "./Components/Navbar";
 import "flowbite";
 
@@ -23,6 +22,7 @@ import ContactForm from "./Pages/Manager/ContactForm";
 import GroupList from "./Pages/Manager/GroupList";
 import ContactEdit from "./Pages/Manager/EditContact/[id]";
 import TaskManager from "./Pages/Manager/TaskManager";
+import FavoriteList from "./Pages/Manager/FavoriteList";
 
 
 const App = () => {
@@ -42,6 +42,7 @@ const App = () => {
           <Route path="contactForm" element={<ContactForm />} />
           <Route path="EditContact/:id" element={<ContactEdit />} />
           <Route path="TaskManager" element={<TaskManager />} />
+          <Route path="favoriteList" element={<FavoriteList />} />
 
         </Route>
       </>

@@ -5,6 +5,7 @@ import ManageNow from "../Components/Home/ManageNow";
 import AboutHome from "../Components/Home/AboutHome";
 import AccessProfile from "../Components/Home/AccessProfile";
 import Footer from "../Components/Footer";
+import TeamComponent from "../Components/TeamComponent";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <ManageNow />
       <AboutHome />
       <AccessProfile />
+      <TeamComponent />
       <Footer />
     </div>
   );

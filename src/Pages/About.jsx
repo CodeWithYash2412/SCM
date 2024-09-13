@@ -3,6 +3,7 @@ import TitleBar from "../Components/TitleBar";
 import logo from "../assets/logo.png"
 import { BiSolidBinoculars } from "react-icons/bi";
 import { FaRegCheckCircle, FaTasks, FaUserFriends } from 'react-icons/fa';
+import TeamComponent from "../Components/TeamComponent";
 
 
 const About = () => {
@@ -54,6 +55,7 @@ const About = () => {
               </li>
             </ul>
           </div>
+          <TeamComponent />
         </div>
       </section>
     </div>

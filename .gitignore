@@ -56,3 +56,6 @@ Thumbs.db
 # Optional REACT-NATIVE
 .expo/
 .expo-shared/
+
+# Local Netlify folder
+.netlify
